@@ -1,81 +1,121 @@
-# Django & Postgres
+# Invoice & Billing Management API
 
-[![1-click-deploy](https://raw.githubusercontent.com/DefangLabs/defang-assets/main/Logos/Buttons/SVG/deploy-with-defang.svg)](https://portal.defang.dev/redirect?url=https%3A%2F%2Fgithub.com%2Fnew%3Ftemplate_name%3Dsample-django-postgres-template%26template_owner%3DDefangSamples)
+A backend-focused **Django REST Framework (DRF)** project that manages
+clients, products, invoices, and payments with role-based access
+control.
 
-This template is a customer relationship management list project developed using Python Django framework, offering a starting point to help you quickly build your customer management system. We use PostgreSQL as the database. We have prepared all the essential files for deployment. By spending less than 10 minutes setting up the environment, as detailed in the prerequisites, and executing the commands in our step-by-step guide, your website will be ready to go live to the world!
+## Features
 
-## Prerequisites
+-   **Authentication & Authorization**
+    -   JWT Authentication (Login, Refresh, Logout, Register)
+    -   Role-Based Access Control (Manager, Employee)
+    -   Custom permissions (e.g., Managers full access, Employees
+        read-only)
+-   **Core Modules**
+    -   **Clients**: Manage customer records
+    -   **Products**: Manage available products
+    -   **Invoices**: Create invoices with items, total, and remaining
+        balance
+    -   **Payments**: Record full or partial payments, update invoice
+        status
+    -   **Activity Logs**: Track user actions (e.g., recording payments)
+-   **Other Integrations**
+    -   Filtering support (basic)
+    -   API documentation with DRF-Spectacular
+    -   GitHub-ready project with `.gitignore`
 
-1. Download [Defang CLI](https://github.com/DefangLabs/defang)
-2. (Optional) If you are using [Defang BYOC](https://docs.defang.io/docs/concepts/defang-byoc) authenticate with your cloud provider account
-3. (Optional for local development) [Docker CLI](https://docs.docker.com/engine/install/)
+## Tech Stack
 
-## Development
+-   Python
+-   Django
+-   Django REST Framework (DRF)
+-   PostgreSQL (configurable)
+-   JWT Auth (djangorestframework-simplejwt)
+-   API Docs (drf-spectacular) - UI for testing APIs
 
-To run the application locally, you can use the following command:
+## API Documentation
 
-```bash
-docker compose up --build
-```
+This project uses **drf-spectacular** for automatic API documentation.
 
-## Configuration
+- **Swagger UI (Interactive Docs):** [http://127.0.0.1:8000/api/docs/](http://127.0.0.1:8000/api/docs/)  
+- **Redoc UI (Static Docs):** [http://127.0.0.1:8000/api/redoc/](http://127.0.0.1:8000/api/redoc/)  
+- **OpenAPI Schema (JSON/YAML):** [http://127.0.0.1:8000/api/schema/](http://127.0.0.1:8000/api/schema/)  
 
-For this sample, you will need to provide the following [configuration](https://docs.defang.io/docs/concepts/configuration): 
+## Usage
 
-> Note that if you are using the 1-click deploy option, you can set these values as secrets in your GitHub repository and the action will automatically deploy them for you.
+-   Access API docs at: `http://127.0.0.1:8000/api/docs/`
+-   Register or log in to obtain JWT tokens.
+-   Use the tokens for authenticated API requests.
 
-### `POSTGRES_PASSWORD` 
+## Example API Endpoints
 
-The password for the PostgreSQL database.
+-   `POST /api/v1/auth/register/` → Register new user
+-   `POST /api/v1/auth/login/` → Obtain JWT token
+-   `POST /api/v1/auth/logout/` → Logout
+-   `POST /api/v1/auth/refresh/` → Refresh Token
+-   `All /api/v1/billing/clients/` → CRUD Clients
+-   `ALL /api/v1/billing/products/` → CRUD Products
+-   `ALL /api/v1/billing/invoices/` → CRUD Invoice
+-   `ALL /api/v1/billing/payments/` → CRUD Payments
+-   `GET /api/v1/billing/activity-logs/` → View all Activities
 
-```bash
-defang config set POSTGRES_PASSWORD
-```
+## Installation
 
-### `SECRET_KEY` 
+1.  Clone the repository:
 
-The secret key is used to secure the Django application.
-
-```bash
-defang config set SECRET_KEY
-```
-
-### `ALLOWED_HOSTS` 
-
-The allowed hosts for the Django application. (i.e. the domain your app runs on)
-
-```bash
-defang config set ALLOWED_HOSTS
-```
-
-## Deployment
-
-> [!NOTE]
-> Download [Defang CLI](https://github.com/DefangLabs/defang)
-
-### Defang Playground
-
-Deploy your application to the Defang Playground by opening up your terminal and typing:
-```bash
-defang compose up
-```
-
-### BYOC (AWS)
-
-If you want to deploy to your own cloud account, you can use Defang BYOC:
-
-1. [Authenticate your AWS account](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html), and check that you have properly set your environment variables like `AWS_PROFILE`, `AWS_REGION`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY`.
-2. Run in a terminal that has access to your AWS environment variables:
-    ```bash
-    defang --provider=aws compose up
+    ``` bash
+    git clone https://github.com/yourusername/yourrepo.git
+    cd yourrepo
     ```
 
----
+2.  Create and activate a virtual environment:
 
-Title: Django & PostgreSQL
+    ``` bash
+    python -m venv venv
+    venv\Scripts\activate    # Windows
+    ```
 
-Short Description: A customer relationship management list project developed using the Python Django framework, offering a starting point to help you quickly build your customer management system.
+3.  Install dependencies:
 
-Tags: Django, PostgreSQL, Python, SQL
+    ``` bash
+    pip install -r requirements.txt
+    ```
 
-Languages: python
+4.  Set up environment variables in `.env` (example):
+
+    ``` env
+    SECRET_KEY=your-secret-key
+    DEBUG=True
+    DATABASE_URL=postgres://user:password@localhost:5432/dbname
+    ```
+
+5.  Run migrations:
+
+    ``` bash
+    python manage.py migrate
+    ```
+
+6.  Create a superuser:
+
+    ``` bash
+    python manage.py createsuperuser
+    ```
+
+7.  Start the development server:
+
+    ``` bash
+    python manage.py runserver
+    ```
+
+## Notes
+
+-   Filtering is enabled, but pagination is not implemented (designed
+    for limited dataset showcase).
+-   Focus is backend logic for portfolio purposes (no frontend).
+
+------------------------------------------------------------------------
+
+### Author
+
+Developed as a portfolio project to demonstrate **Django REST Framework
+backend skills**.

@@ -16,7 +16,7 @@ services:
     # uncomment to add your own domain
     # domainname: example.com
     restart: unless-stopped
-    build: ./app
+    build: .
     ports:
       - mode: ingress
         target: 8000
